@@ -1,13 +1,13 @@
-import UserService from "../services/user.services.js"
+import userInstance from "../services/user.services.js"
 
 class AuthService{
     async registerUser(req){
-        let newUser=await UserService.create(req)
+        let newUser=await userInstance.create(req)
         return newUser
     }
     async loginUser(req){
-        let existingUser=await UserService.findUserByEmail(req)
+        let existingUser=await userInstance.findUserByEmail(req)
         return existingUser;
     }
 }
-export default new AuthService;
+export default new AuthService();

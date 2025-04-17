@@ -14,8 +14,8 @@ class UserService{
     }
     async findUserByEmail(req)
     {
-        let email=req.body
-        let existingUser=await User.findOne(email)
+        let {email}=req.body
+        let existingUser=await User.findOne({email})
         return existingUser;
     }
    async findAllUsers()
@@ -24,4 +24,5 @@ class UserService{
     return users;
    }
 }
-export default new UserService();
+const userInstance=new UserService()
+export default userInstance;
