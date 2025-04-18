@@ -1,18 +1,30 @@
 import jwt from "jsonwebtoken";
+import userInstance from '../services/user.services.js';
 
 // verify token
 
-const auth = (req, res, next) => {
-    const authHeader = req.headers.authorization.split(" ")[1]; 
-    if(!authHeader||!req.headers.authorization.startsWith("Bearer"))
+const auth = async(req, res, next) => {
+    // const authHeader = req.headers.authorization.split(" ")[1]; 
+    console.log(req.headers);
+    
+    let token;  
+    if(req.headers.authorization||req.headers.authorization.startsWith("Bearer"))
     {
-        console.log("Invalid or missing Authorization header:", authHeader);
-    return res.status(401).json({ message: "Unauthorized" });
+        token=req.headers.authorization.split(" ")[1]; 
     }
-    console.log(authHeader);
-      
-    const decoded = jwt.verify(authHeader, process.env.JWT_SECRET); 
-    console.log("Decoded Token:", decoded);
+    console.log(token);
+    
+    if(!token)
+    {
+        return res.status(400).json("Please login!!")
+    }      
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET); 
+    console.log("Decoded Token:", decodedToken);
+    let user=await userInstance.findUserById(decodedToken.id)
+    if(!user){
+        return res.status(400).json("User doesn't exist,Please register!!")
+    }
+    req.userId=user._id;
     next();
   };
   
