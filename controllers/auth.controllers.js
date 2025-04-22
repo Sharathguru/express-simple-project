@@ -14,8 +14,12 @@ export let register=asynHandler(async(req,res,next)=>{
 
 
 export let login=async(req,res,next)=>{
+    console.log(req.body);
+    
     let {password}=req.body
     let exisitngUser=await  AuthService.loginUser(req)
+    console.log(exisitngUser);
+    
     if(!exisitngUser)
     {
         return res.status(400).json({

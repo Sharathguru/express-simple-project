@@ -28,6 +28,8 @@ class UserService{
                 throw new Error("Email field is missing!")
             }
         let existingUser=await User.findOne({email})
+        // console.log(existingUser);
+        
         if(!existingUser)
             {
                 throw new Error("User doesn't exist with this mail id")
