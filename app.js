@@ -13,7 +13,7 @@ const app = express();
 
 const limiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
-    limit: 100, // Limit each IP to 100 requests per minute
+    limit: 5, // Limit each IP to 100 requests per minute
 });
 
 app.use(cors({
